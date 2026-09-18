@@ -1,0 +1,35 @@
+:root {
+  --ground: #0B0F0D;
+  --surface: #151C18;
+  --line: #223027;
+  --ink: #F2F5F3;
+  --muted: #A3B0A8;
+  --accent: #C6F135;
+  --accent-ink: #0B0F0D;
+}
+* { box-sizing: border-box; }
+html { color-scheme: dark; }
+body { margin: 0; background: var(--ground); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
+a { color: var(--accent); }
+.wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 64px; }
+header.site { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-bottom: 24px; border-bottom: 1px solid var(--line); margin-bottom: 32px; }
+.wordmark { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 28px; letter-spacing: 3px; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.wordmark span { color: var(--accent); }
+nav a { color: var(--muted); text-decoration: none; margin-left: 18px; font-size: 14px; }
+nav a:hover { color: var(--ink); }
+h1 { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 44px; letter-spacing: 2px; text-transform: uppercase; line-height: 1; margin: 0 0 8px; }
+h2 { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 600; font-size: 26px; letter-spacing: 1.5px; text-transform: uppercase; margin: 36px 0 8px; color: var(--ink); }
+h3 { font-size: 17px; margin: 24px 0 6px; }
+p, li { color: var(--ink); }
+.muted { color: var(--muted); }
+.lead { font-size: 18px; color: var(--muted); }
+.eyebrow { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 16px 0; }
+.btn { display: inline-block; background: var(--accent); color: var(--accent-ink); font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 1.2px; text-transform: uppercase; text-decoration: none; padding: 12px 20px; border-radius: 8px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+footer a { color: var(--muted); margin-right: 14px; }
+ol, ul { padding-left: 22px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
