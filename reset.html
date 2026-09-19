@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Set a new password – WETHEFIT</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    label { display: block; font-size: 14px; color: var(--muted); margin: 14px 0 6px; }
+    input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid #3A4A42; background: var(--surface); color: var(--ink); font-size: 16px; }
+    button { margin-top: 18px; width: 100%; border: 0; cursor: pointer; }
+    .msg { margin-top: 14px; font-size: 15px; }
+    .ok { color: #5CC47E; } .err { color: #F97066; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <a class="wordmark" href="/">WETHE<span>FIT</span></a>
+    <nav><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="mailto:support@wethefit.com">Support</a></nav>
+  </header>
+
+  <h1>Set a new password</h1>
+  <p class="lead" id="intro">Checking your reset link…</p>
+
+  <form id="form" hidden>
+    <label for="pw">New password (at least 8 characters)</label>
+    <input id="pw" type="password" autocomplete="new-password" minlength="8" required>
+    <label for="pw2">Repeat it</label>
+    <input id="pw2" type="password" autocomplete="new-password" minlength="8" required>
+    <button class="btn" type="submit" id="save">Save password</button>
+    <div class="msg" id="msg"></div>
+  </form>
+
+  <p class="muted" id="help" hidden>This link has expired or was already used. Open the WETHEFIT app, tap <strong>Sign in → Forgot password?</strong> and request a new one.</p>
+
+  <footer><a href="/privacy">Privacy Policy</a><a href="/terms">Terms &amp; Community Guidelines</a><div>© 2026 WETHEFIT</div></footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  const client = supabase.createClient('https://dktqzwatjhjxgxidmbub.supabase.co', 'sb_publishable_UXFODcwM9Jftgd_X5K7Pjg_WXGcbym1');
+  const form = document.getElementById('form'), intro = document.getElementById('intro'), help = document.getElementById('help'), msg = document.getElementById('msg');
+  let ready = false;
+  const show = () => { ready = true; intro.textContent = 'Choose a new password for your WETHEFIT account.'; form.hidden = false; };
+  client.auth.onAuthStateChange((event, session) => { if ((event === 'PASSWORD_RECOVERY' || event === 'SIGNED_IN') && session) show(); });
+  client.auth.getSession().then(({ data }) => { if (data.session) show(); });
+  setTimeout(() => { if (!ready) { intro.hidden = true; help.hidden = false; } }, 4000);
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const pw = document.getElementById('pw').value, pw2 = document.getElementById('pw2').value;
+    msg.className = 'msg';
+    if (pw.length < 8) { msg.textContent = 'Use at least 8 characters.'; msg.classList.add('err'); return; }
+    if (pw !== pw2) { msg.textContent = "The two passwords don't match."; msg.classList.add('err'); return; }
+    document.getElementById('save').disabled = true;
+    const { error } = await client.auth.updateUser({ password: pw });
+    document.getElementById('save').disabled = false;
+    if (error) { msg.textContent = error.message; msg.classList.add('err'); return; }
+    msg.textContent = 'Password saved. Open the WETHEFIT app and sign in with it.'; msg.classList.add('ok');
+    await client.auth.signOut();
+  });
+</script>
+</body>
+</html>
